@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body{
+            margin: 0 0;
+        }
+        .nav_top ul,
+        .nav_top li,
+        .nav_top a {
+            margin: 0 0;
+            padding: 0 0;
+        }
+
+        .nav_top ul, .nav_top li {
+            list-style: none;
+        }
+
+        .me_ul li > a {
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+
+        .nav_top li {
+            padding: 0px 50px;
+        }
+
+        .nav_top {
+            background-color: #b50e4c;
+            overflow: hidden;
+            margin: 0 auto;
+            padding: 0 0;
+        }
+
+        .nav_top .me_ul {
+            width: 100%;
+        }
+
+        .nav_top .me_ul > li {
+            width: auto;
+            float: left;
+            position: relative;
+        }
+
+        .nav_top a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        table.table_style1 {margin:15px 15px 15px 15px; background-color:#F06292; border:1px solid #F8BBD0;}
+        table.table_style1 td {background-color:#fff; padding:7px 0 7px 7px; color:#333; font-weight:normal; border:1px solid #F8BBD0;}
+        table.table_style1 td.table_style1_td2 {background-color:#FCE4EC; padding:15px 15px 15px 15px; border:1px solid #F8BBD0; color:#880E4F; font-weight:normal;}
+        table.table_style1 input {border:1px solid #F8BBD0;}
+    </style>
+</head>
+<body>
+<div class="nav_top">
+    <ul class="me_ul">
+        <li sec:authorize="!hasAuthority('ADMIN')"><h2><a style="color:#cccccc" href="http://localhost:8080/" class="hover_a">학사행정시스템</a></h2>
+        <li sec:authorize="hasAuthority('MEMBER')"><h3><a href="http://localhost:8080/info" class="hover_a">학적정보조회</a></h3>
+        <li sec:authorize="hasAuthority('MEMBER')"><h3><a href="http://localhost:8080/rest" class="hover_a">휴복학 신청</a></h3>
+        <li sec:authorize="hasAuthority('MEMBER')"><h3><a href="http://localhost:8080/score" class="hover_a">전체성적조회</a></h3>
+        <li sec:authorize="hasAuthority('MEMBER')"><h3><a href="http://localhost:8080/lecture" class="hover_a">수강조회</a></h3>
+        <li sec:authorize="hasAuthority('MEMBER')"><h3><a href="http://localhost:8080/board" class="hover_a">자유게시판</a></h3>
+        <li sec:authorize="hasAuthority('ADMIN')"><h2><a style="color:#cccccc" href="http://localhost:8080/" class="hover_a">학사행정시스템(관리자)</a></h2>
+        <li sec:authorize="hasAuthority('ADMIN')"><h3><a href="http://localhost:8080/admin/add" class="hover_a">과목추가</a></h3>
+        <li sec:authorize="hasAuthority('ADMIN')"><h3><a href="http://localhost:8080/admin/board" class="hover_a">게시판 관리</a></h3>
+        <li sec:authorize="hasAuthority('ADMIN')"><h3><a href="http://localhost:8080/admin/rest" class="hover_a">휴복학 조회</a></h3>
+        <li sec:authorize="hasAuthority('ADMIN')"><h3><a href="http://localhost:8080/admin/graph" class="hover_a">통계 확인</a></h3>
+        <li sec:authorize="isAnonymous()" style="float:right"><h4>
+            <a href="http://localhost:8080/login">Login</a></h4>
+        </li>
+        <li sec:authorize="isAuthenticated()" style="float:right"><h4>
+            <a href="http://localhost:8080/logout_page">Logout</a></h4>
+        </li>
+    </ul>
+</div>
+<form th:action="@{/info/edit}" method="post" th:object="${info}">
+    <div class="form-group">
+        <label for="phone">전화번호</label>
+        <input type="text" class="form-control" id="phone" th:field="*{phone}" required>
+    </div>
+    <div class="form-group">
+        <label for="mail">이메일</label>
+        <input type="text" class="form-control" id="mail" th:field="*{mail}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">수정</button>
+</form>
+<a class="btn btn-secondary mt-3" th:href="@{/info}">취소</a>
+</body>
+</html>
